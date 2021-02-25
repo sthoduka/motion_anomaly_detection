@@ -1,2 +1,4 @@
 theme: jekyll-theme-dinky
 title: [motion anomaly detection]
+zenodo:
+    dataset_url: https://zenodo.org/
