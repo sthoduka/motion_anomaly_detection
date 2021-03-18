@@ -9,7 +9,10 @@ The main ones are:
 * pytorch-lightning=0.9.0
 
 
-## Run
+## Generate optical flow images
+Follow instructions [here](apps/optical_flow).
+
+## Train
     python main.py \
       --video_root=<path to training data folder> \
       --val_video_root=<path to validation data folder> \
