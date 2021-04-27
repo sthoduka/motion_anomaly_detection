@@ -27,3 +27,7 @@ Follow instructions [here](apps/optical_flow).
       --flow_type=normal_masked \
       --prediction_offset_start=5 \
       --prediction_offset=9
+
+## Generate rendered robot body images
+The dataset already includes the rendered robot body images. If you want to regenerate them or render them for your own dataset/robot, follow the instructions [here](apps/robot_render).
+
