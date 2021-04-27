@@ -4,6 +4,7 @@
 #include <opencv2/optflow.hpp>
 
 #include <set>
+#include <string>
 
 #include <boost/filesystem.hpp>
 
@@ -121,11 +122,13 @@ int main(int argc, char **argv)
         convertFlowToImage(flow_parts[0], flow_parts[1], flow_img_x, flow_img_y,
                           -bound, bound);
 
+        // extract frame number of corresponding RGB frame
+        int frame_id = std::stoi((*iter).substr((*iter).size()-8, 4));
         char tmp[256];
-        sprintf(tmp, "framex_%04d.jpg", frame_number);
+        sprintf(tmp, "framex_%04d.jpg", frame_id);
         std::string path = output_directory + "/" + tmp;
         cv::imwrite(path, flow_img_x);
-        sprintf(tmp, "framey_%04d.jpg", frame_number);
+        sprintf(tmp, "framey_%04d.jpg", frame_id);
         path = output_directory + "/" + tmp;
         cv::imwrite(path, flow_img_y);
 
