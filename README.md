@@ -1,6 +1,5 @@
 This repository contains the code for the paper "Using Visual Anomaly Detection for Task Execution Monitoring"
 
-
 ## Dependencies:
 See [requirements.txt](requirements.txt).
 
@@ -8,9 +7,11 @@ The main ones are:
 * torch=1.6.0
 * pytorch-lightning=0.9.0
 
+## Clone
+    git clone --recursive https://github.com/sthoduka/motion_anomaly_detection.git
 
 ## Generate optical flow images
-Follow instructions [here](apps/optical_flow).
+Follow the instructions [here](apps/optical_flow).
 
 ## Train
     python main.py \
@@ -27,6 +28,9 @@ Follow instructions [here](apps/optical_flow).
       --flow_type=normal_masked \
       --prediction_offset_start=5 \
       --prediction_offset=9
+
+## Compute expected and observed camera motion
+Follow the instructions [here](apps/camera_motion).
 
 ## Generate rendered robot body images
 The dataset already includes the rendered robot body images. If you want to regenerate them or render them for your own dataset/robot, follow the instructions [here](apps/robot_render).
