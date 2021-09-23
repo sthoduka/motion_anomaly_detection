@@ -17,3 +17,6 @@ This video has no anomalies; intermittent false positives are detected during re
 
 This video has a large false positive because the body motion error goes slightly above its threshold. The anomaly at the start of the video is detected correctly though.
 <iframe width="640" height="360" src="https://www.youtube.com/embed/FKi6l4pE6eM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Sample (nominal) training videos
+<iframe width="640" height="360" src="https://www.youtube.com/embed/nFvlLLXl8zE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
