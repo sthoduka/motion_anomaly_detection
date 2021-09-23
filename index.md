@@ -9,6 +9,11 @@ Santosh Thoduka, Juergen Gall and Paul G. Plöger
 
 ## Additional sample videos:
 
+This video shows an example of an anomaly that occurs early, but there are no detections while the arm and book are static.
 <iframe width="640" height="360" src="https://www.youtube.com/embed/-j0CMPbGfbM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+This video has no anomalies; intermittent false positives are detected during release and retraction.
 <iframe width="640" height="360" src="https://www.youtube.com/embed/pym8hO7FsD8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+This video has a large false positive because the body motion error goes slightly above its threshold. The anomaly at the start of the video is detected correctly though.
+<iframe width="640" height="360" src="https://www.youtube.com/embed/FKi6l4pE6eM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
