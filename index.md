@@ -7,3 +7,6 @@ Santosh Thoduka, Juergen Gall and Paul G. Plöger
 ## Supplementary video:
 <iframe width="640" height="360" src="https://www.youtube.com/embed/U8dO8dEILZw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+## Additional sample videos:
+
+<iframe width="640" height="360" src="https://www.youtube.com/embed-j0CMPbGfbM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
