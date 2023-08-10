@@ -30,7 +30,7 @@ void convertFlowToImage(const cv::Mat &flow_x, const cv::Mat &flow_y, cv::Mat &i
 
 int main(int argc, char **argv)
 {
-    cv::Ptr<cv::DualTVL1OpticalFlow> alg_tvl1 = cv::DualTVL1OpticalFlow::create();
+    cv::Ptr<cv::optflow::DualTVL1OpticalFlow> alg_tvl1 = cv::optflow::DualTVL1OpticalFlow::create();
     cv::Mat im;
 
     std::string input_directory;
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     }
 
 
-    im = cv::imread(*(sorted_images.begin()), CV_LOAD_IMAGE_COLOR);
+    im = cv::imread(*(sorted_images.begin()), cv::IMREAD_COLOR);
 
     int frame_number = 0;
     cv::Mat output;
@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     cv::Mat previous_image;
     im.copyTo(previous_image);
 
-    cv::cvtColor(previous_image, previous_image, CV_BGR2GRAY);
+    cv::cvtColor(previous_image, previous_image, cv::COLOR_BGR2GRAY);
     // Equalize histogram so that the optical flow calculation is more robust to lighting changes
     cv::equalizeHist(previous_image, previous_image);
 
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
         if (frame_number % divisor !=0) continue;
         std::cout << frame_number << std::endl;
 
-        im = cv::imread(*iter, CV_LOAD_IMAGE_COLOR);
+        im = cv::imread(*iter, cv::IMREAD_COLOR);
 
         if (im.empty())
         {
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
         }
 
         cv::Mat curr_gray;
-        cv::cvtColor(im, curr_gray, CV_BGR2GRAY);
+        cv::cvtColor(im, curr_gray, cv::COLOR_BGR2GRAY);
         cv::equalizeHist(curr_gray, curr_gray);
 
         alg_tvl1->calc(curr_gray, previous_image, flow);
