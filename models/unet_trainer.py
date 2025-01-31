@@ -16,19 +16,11 @@ from datasets.optical_flow_dataset import OpticalFlowPair
 class UnetVAETrainer(pl.LightningModule):
     def __init__(self, hparams):
         super().__init__()
-        self.hparams = hparams
+        self.save_hyperparameters(hparams)
         self.prob_unet = ProbabilisticUnet(input_channels=2, num_classes=2, num_filters=[32, 64, 128, 192], latent_dim=self.hparams.latent_dim, no_convs_fcomb=4, beta=10.0)
-
-
-    @staticmethod
-    def add_model_specific_args(parent_parser):
-        parser = ArgumentParser(parents=[parent_parser], add_help=False)
-        parser.add_argument('--flow_type', type=str, default='normal', help='normal, normal_masked, registered, registered_masked')
-        parser.add_argument('--latent_dim', type=int, default=6, help='dimension of latent space')
-        parser.add_argument('--beta', type=float, default=10.0, help='weighting of KL-div in loss function')
-        parser.add_argument('--prediction_offset', type=int, default=9, help='Input should be a maximum of how many frames in the past?')
-        parser.add_argument('--prediction_offset_start', type=int, default=5, help='Input should be a minimum of how many frames in the past?')
-        return parser
+        self.train_outputs = []
+        self.val_outputs = []
+        self.test_outputs = []
 
     def forward(self, batch):
         flow_prev, body_flow_prev, flow, body_flow, annotation = batch
@@ -47,28 +39,51 @@ class UnetVAETrainer(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         recon, loss = self(batch)
-        log = {'loss': loss}
-        return {'loss': loss, 'log': log}
+        self.train_outputs.append(loss)
+        return {'loss': loss}
 
     def validation_step(self, batch, batch_idx):
         flow_prev, body_flow_prev, flow, body_flow, annotation = batch
         recon, _ = self(batch)
         loss = F.mse_loss(recon, flow)
         log = {'loss': loss}
-        return {'loss': loss, 'log': log}
+        self.val_outputs.append(log)
+        return log
 
     def test_step(self, batch, batch_idx):
         flow_prev, body_flow_prev, flow, body_flow, annotation = batch
         recon, _ = self(batch)
         loss = F.mse_loss(recon, flow)
         log = {'loss': loss}
-        return {'loss': loss, 'log': log}
+        self.test_outputs.append(log)
+        return log
 
+    def on_validation_epoch_start(self):
+        super().on_validation_epoch_start()
+        self.val_outputs = []
 
-    def validation_epoch_end(self, outputs):
-        avg_loss = torch.stack([x['log']['loss'] for x in outputs]).mean()
-        log = {'val_loss': avg_loss}
-        return {'val_loss': avg_loss, 'log': log}
+    def on_validation_epoch_end(self):
+        avg_loss = torch.stack([x['loss'] for x in self.val_outputs]).mean()
+        self.log("val_loss", avg_loss)
+        self.val_outputs.clear()
+
+    def on_test_epoch_start(self):
+        super().on_test_epoch_start()
+        self.test_outputs = []
+
+    def on_test_epoch_end(self):
+        avg_loss = torch.stack([x['loss'] for x in self.test_outputs]).mean()
+        self.log("test_loss", avg_loss)
+        self.test_outputs.clear()
+
+    def on_train_epoch_start(self):
+        super().on_train_epoch_start()
+        self.train_outputs = []
+
+    def on_train_epoch_end(self):
+        avg_loss = torch.stack(self.train_outputs).mean()
+        self.log("train_loss", avg_loss)
+        self.train_outputs.clear()
 
     def configure_optimizers(self):
         optimizer = torch.optim.Adam(self.parameters(), lr=self.hparams.learning_rate)

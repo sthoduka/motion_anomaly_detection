@@ -76,7 +76,6 @@ def make_dataset_flow_images(directory, flow_type='normal'):
             rendered_body = os.path.join(trial, 'rendered_body', 'frame_%04d.png'%frame_id)
             ds_rendered_body.append(rendered_body)
         trial_id += 1
-    print('Number of trials ', trial_id)
     data = {}
     data['rendered_body'] = np.array(ds_rendered_body)
     data['ofx'] = np.array(ds_optical_flow_x)
@@ -195,7 +194,7 @@ class OpticalFlowPair(torch.utils.data.Dataset):
 
     def create_mask(self, bodyimg):
         ret, img = cv2.threshold(bodyimg, 250, 255, 0)
-        img2, contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         cv2.drawContours(img, contours, 0, (0,255,0), 3)
         img = img[np.newaxis, :, :]
         img = np.repeat(img, 2, axis=0)

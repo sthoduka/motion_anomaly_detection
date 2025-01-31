@@ -4,8 +4,8 @@ This repository contains the code for the paper "Using Visual Anomaly Detection 
 See [requirements.txt](requirements.txt).
 
 The main ones are:
-* torch=1.6.0
-* pytorch-lightning=0.9.0
+* torch=2.3.0
+* pytorch-lightning=2.2.5
 
 ## Clone
     git clone --recursive https://github.com/sthoduka/motion_anomaly_detection.git
